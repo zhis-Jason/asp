@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>backdrop-filter</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            margin: 0;
+        }
+
+        .container {
+            background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/14179/0236.jpg");
+            background-size: cover;
+            height: 100vh;
+            padding: 10px;
+            width: 100%;
+            position: relative;
+        }
+
+        .boxes {
+            display: flex;
+            margin-right: 10px;
+            overflow: scroll;
+            min-height: 90vh;
+            width: 100%;
+            align-items: center;
+        }
+
+        .box {
+            border: 1px solid rgba(255, 255, 255, .7);
+            min-width: 400px;
+            min-height: 95vh;
+            line-height: 1;
+            padding: 15px 15px;
+            transition: all .3s ease;
+        }
+
+        .box:nth-child(1n + 1) {
+            border-right: none;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 24px;
+        }
+
+        .none {
+            backdrop-filter: none;
+        }
+
+        .grayscale {
+            backdrop-filter: grayscale(1);
+        }
+
+        .brightness {
+            backdrop-filter: brightness(1.5);
+        }
+
+        .blur {
+            backdrop-filter: blur(5px);
+        }
+
+        .contrast {
+            backdrop-filter: contrast(.8);
+        }
+
+        .drop-shadow {
+            backdrop-filter: drop-shadow(4px 4px 10px blue);
+        }
+
+        .invert {
+            backdrop-filter: invert(.7);
+        }
+
+        .opacity {
+            backdrop-filter: opacity(.4);
+        }
+
+        .sepia {
+            backdrop-filter: sepia(.4);
+        }
+
+        .saturate {
+            backdrop-filter: saturate(1.8);
+        }
+
+        .hue-rotate {
+            backdrop-filter: hue-rotate(120deg);
+        }
+
+        .drop-shadow {
+            backdrop-filter: drop-shadow(30px 10px 4px #4444dd);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="boxes">
+            <div class="box none">
+                <h1>backdrop-filter: none</h1>
+            </div>
+            <div class="box grayscale">
+                <h1>backdrop-filter: grayscale(100%)</h1>
+                <p>用於將圖像的顏色轉換為黑白。值為0％表示原始圖像，值為100％表示完全黑白圖像</p>
+                <input type="range" value="100">
+            </div>
+            <div class="box brightness">
+                <h1>backdrop-filter: brightness(1.5)</h1>
+                <p>用於使圖像更亮或更暗。值超過100％將使圖像變亮，而值低於100％將使圖像變暗。如果亮度變為0％，它將完全使圖像變黑</p>
+                <input type="range" value="15">
+            </div>
+            <div class="box blur">
+                <h1>backdrop-filter: blur(5px)</h1>
+                <p>用於將高斯模糊應用於圖像。此功能的默認值為0，不應用任何模糊效果</p>
+                <input type="range" value="5">
+            </div>
+            <div class="box contrast">
+                <h1>backdrop-filter: contrast(80%)</h1>
+                <p>它用於設置圖像的對比度。原始圖像的對比度為100％。如果對比度低於0％，將使圖像完全變黑</p>
+                <input type="range" value="80">
+            </div>
+            <div class="box invert">
+                <h1>backdrop-filter: invert(70%)</h1>
+                <p>用於反轉圖像。默認值是0％，代表原始圖像，而100％將使圖像完全反轉</p>
+                <input type="range" value="70">
+            </div>
+            <div class="box opacity">
+                <h1>backdrop-filter: opacity(40%)</h1>
+                <p>它用於設置圖像的不透明度。默認值為0％，表示圖像是完全透明的，而100％的值表示原始圖像是完全不透明的</p>
+                <input type="range" value="40">
+            </div>
+            <div class="box sepia">
+                <h1>backdrop-filter: sepia(40%)</h1>
+                <p>它用於將圖像轉換為棕褐色，使圖像看起來更溫暖。 0％的值表示原始圖像，而100％的值表示完整的棕褐色圖像</p>
+                <input type="range" value="40">
+            </div>
+            <div class="box saturate">
+                <h1>backdrop-filter: saturate(1.8)</h1>
+                <p>用於設置元素的飽和度。默認值為100％，表示原始圖像。 0％的值表示完全不飽和的圖像，而100％以上的值表示super-saturated圖像</p>
+                <input type="range" value="18">
+            </div>
+            <div class="box hue-rotate">
+                <h1>backdrop-filter: hue-rotate(120deg)</h1>
+                <p>於將色調旋轉應用於圖像。函數值表示將調整圖像圓的色環周圍的度數。默認值為0，表示原始圖像</p>
+                <input type="range" min="0" max="360" value="120">
+            </div>
+            <div class="box drop-shadow">
+                <h1>backdrop-filter: drop-shadow(120deg)</h1>
+                <p>用於對元素應用陰影效果。它接受水平和垂直陰影量以及散布和顏色值</p>
+                <!-- <input type="range"> -->
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    //grayscale
+    $(".grayscale input").change(() => {
+        $(".grayscale").css("backdrop-filter", `grayscale(${$(".grayscale input").val()}%)`)
+        $(".grayscale h1").text(`backdrop-filter: grayscale(${$(".grayscale input").val()}%)`)
+    })
+    //brightness
+    $(".brightness input").change(() => {
+        $(".brightness").css("backdrop-filter", `brightness(${$(".brightness input").val() / 10})`)
+        $(".brightness h1").text(`backdrop-filter: brightness(${$(".brightness input").val() / 10})`)
+    })
+    //blur
+    $(".blur input").change(() => {
+        $(".blur").css("backdrop-filter", `blur(${$(".blur input").val()}px)`)
+        $(".blur h1").text(`backdrop-filter: blur(${$(".blur input").val()}px)`)
+    })
+    //contrast
+    $(".contrast input").change(() => {
+        $(".contrast").css("backdrop-filter", `contrast(${$(".contrast input").val()}%)`)
+        $(".contrast h1").text(`backdrop-filter: contrast(${$(".contrast input").val()}%)`)
+    })
+    //invert
+    $(".invert input").change(() => {
+        $(".invert").css("backdrop-filter", `invert(${$(".invert input").val()}%)`)
+        $(".invert h1").text(`backdrop-filter: invert(${$(".invert input").val()}%)`)
+    })
+    //opacity
+    $(".opacity input").change(() => {
+        $(".opacity").css("backdrop-filter", `opacity(${$(".opacity input").val()}%)`)
+        $(".opacity h1").text(`backdrop-filter: opacity(${$(".opacity input").val()}%)`)
+    })
+    //sepia
+    $(".sepia input").change(() => {
+        $(".sepia").css("backdrop-filter", `sepia(${$(".sepia input").val()}%)`)
+        $(".sepia h1").text(`backdrop-filter: sepia(${$(".sepia input").val()}%)`)
+    })
+    //saturate
+    $(".saturate input").change(() => {
+        $(".saturate").css("backdrop-filter", `saturate(${$(".saturate input").val()}%)`)
+        $(".saturate h1").text(`backdrop-filter: saturate(${$(".saturate input").val()}%)`)
+    })
+    //hue-rotate
+    $(".hue-rotate input").change(() => {
+        $(".hue-rotate").css("backdrop-filter", `hue-rotate(${$(".hue-rotate input").val()}deg)`)
+        $(".hue-rotate h1").text(`backdrop-filter: hue-rotate(${$(".hue-rotate input").val()}deg)`)
+    })
+    //drop-shadow
+    $(".drop-shadow input").change(() => {
+        $(".drop-shadow").css("backdrop-filter", `drop-shadow(${$(".grayscale input").val()}%)`)
+        $(".drop-shadow h1").text(`backdrop-filter: drop-shadow(${$(".grayscale input").val()}%)`)
+    })
+</script>
+
+</html>
